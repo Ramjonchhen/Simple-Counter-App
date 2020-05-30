@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'number.dart';
 
 void main() {
   runApp(MyApp());
 }
-
-Number num = Number();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
@@ -13,49 +10,84 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.lightBlueAccent[100],
-        appBar: AppBar(
-          title: Text(
-            'Counter App',
-            style: TextStyle(
-              color: Colors.blue,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-        ),
-        body: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              buildIcon(icon: Icon(Icons.control_point, color: Colors.blue)),
-              NumDisplay(),
-              buildIcon(
-                  icon: Icon(Icons.remove_circle_outline, color: Colors.blue))
-            ],
-          ),
-        ),
-      ),
+      home: Body(),
     );
   }
 }
 
-class NumDisplay extends StatefulWidget {
-  NumDisplay({Key key}) : super(key: key);
+class Body extends StatefulWidget {
+  Body({Key key}) : super(key: key);
 
   @override
-  _NumDisplayState createState() => _NumDisplayState();
+  _BodyState createState() => _BodyState();
 }
 
-class _NumDisplayState extends State<NumDisplay> {
+class _BodyState extends State<Body> {
+  int number = 0;
+
+  void inc() {
+    setState(() {
+      number++;
+    });
+  }
+
+  void dec() {
+    setState(() {
+      number--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '0',
-      style: TextStyle(
-        fontSize: 40.0,
-        color: Colors.white,
+    return Scaffold(
+      backgroundColor: Colors.blueAccent[200],
+      appBar: AppBar(
+        title: Text(
+          'Counter App',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent[200],
+      ),
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
+                inc();
+              },
+              child: buildIcon(
+                icon: Icon(
+                  Icons.add_circle_outline,
+                  color: Colors.blue[900],
+                  size: 25.0,
+                ),
+              ),
+            ),
+            Text(
+              '$number',
+              style: TextStyle(
+                fontSize: 40.0,
+                color: Colors.white,
+              ),
+            ),
+            FlatButton(
+              onPressed: () {
+                dec();
+              },
+              child: buildIcon(
+                icon: Icon(
+                  Icons.remove_circle_outline,
+                  color: Colors.blue[900],
+                  size: 25.0,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -77,7 +109,7 @@ Container buildIcon({Icon icon}) {
         shape: BoxShape.circle,
         color: Colors.blueAccent[100],
       ),
-      child: icon,
+      child: Center(child: icon),
     ),
   );
 }
